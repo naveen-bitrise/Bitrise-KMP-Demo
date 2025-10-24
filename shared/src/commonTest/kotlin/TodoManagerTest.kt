@@ -79,12 +79,16 @@ class TodoManagerTest {
     fun testGetAllTodosWithMultipleTodos() = runTest {
         val todoManager = TodoManager()
         
-        // Add multiple todos with await
+        // Add multiple todos with small delays to ensure unique timestamps
         val firstResult = todoManager.addTodo("First Todo", "First Description")
         assertTrue(firstResult.isSuccess)
         
+        kotlinx.coroutines.delay(10) // Small delay to ensure different timestamps
+        
         val secondResult = todoManager.addTodo("Second Todo", "Second Description")
         assertTrue(secondResult.isSuccess)
+        
+        kotlinx.coroutines.delay(10) // Small delay to ensure different timestamps
         
         val thirdResult = todoManager.addTodo("Third Todo", "Third Description")
         assertTrue(thirdResult.isSuccess)
@@ -92,10 +96,10 @@ class TodoManagerTest {
         val todos = todoManager.getAllTodos().first()
         assertEquals(3, todos.size)
         
-        // Todos are sorted by createdAt descending (newest first)
+        // Verify all three todos are present (order may vary due to timestamp sorting)
         val todoTitles = todos.map { it.title }
-        assertTrue(todoTitles.contains("First Todo"))
-        assertTrue(todoTitles.contains("Second Todo"))
-        assertTrue(todoTitles.contains("Third Todo"))
+        assertTrue(todoTitles.contains("First Todo"), "Should contain First Todo")
+        assertTrue(todoTitles.contains("Second Todo"), "Should contain Second Todo")
+        assertTrue(todoTitles.contains("Third Todo"), "Should contain Third Todo")
     }
 }
