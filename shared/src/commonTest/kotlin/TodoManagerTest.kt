@@ -79,10 +79,15 @@ class TodoManagerTest {
     fun testGetAllTodosWithMultipleTodos() = runTest {
         val todoManager = TodoManager()
         
-        // Add multiple todos
-        todoManager.addTodo("First Todo", "First Description")
-        todoManager.addTodo("Second Todo", "Second Description")
-        todoManager.addTodo("Third Todo", "Third Description")
+        // Add multiple todos with await
+        val firstResult = todoManager.addTodo("First Todo", "First Description")
+        assertTrue(firstResult.isSuccess)
+        
+        val secondResult = todoManager.addTodo("Second Todo", "Second Description")
+        assertTrue(secondResult.isSuccess)
+        
+        val thirdResult = todoManager.addTodo("Third Todo", "Third Description")
+        assertTrue(thirdResult.isSuccess)
         
         val todos = todoManager.getAllTodos().first()
         assertEquals(3, todos.size)
