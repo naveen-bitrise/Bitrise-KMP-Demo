@@ -74,4 +74,20 @@ class TodoManagerTest {
         val todos = todoManager.getAllTodos().first()
         assertTrue(todos.isEmpty())
     }
+    
+    @Test
+    fun testGetAllTodosWithMultipleTodos() = runTest {
+        val todoManager = TodoManager()
+        
+        // Add multiple todos
+        todoManager.addTodo("First Todo", "First Description")
+        todoManager.addTodo("Second Todo", "Second Description")
+        todoManager.addTodo("Third Todo", "Third Description")
+        
+        val todos = todoManager.getAllTodos().first()
+        assertEquals(3, todos.size)
+        assertEquals("First Todo", todos[0].title)
+        assertEquals("Second Todo", todos[1].title)
+        assertEquals("Third Todo", todos[2].title)
+    }
 }
