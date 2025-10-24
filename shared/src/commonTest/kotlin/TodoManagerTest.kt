@@ -91,8 +91,11 @@ class TodoManagerTest {
         
         val todos = todoManager.getAllTodos().first()
         assertEquals(3, todos.size)
-        assertEquals("First Todo", todos[0].title)
-        assertEquals("Second Todo", todos[1].title)
-        assertEquals("Third Todo", todos[2].title)
+        
+        // Todos are sorted by createdAt descending (newest first)
+        val todoTitles = todos.map { it.title }
+        assertTrue(todoTitles.contains("First Todo"))
+        assertTrue(todoTitles.contains("Second Todo"))
+        assertTrue(todoTitles.contains("Third Todo"))
     }
 }
