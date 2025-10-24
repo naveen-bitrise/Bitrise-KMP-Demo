@@ -3,6 +3,17 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 project_type: kotlin-multiplatform
 
+trigger_map:
+- push_branch: "*"
+  workflow: run_tests_android
+- pull_request_source_branch: "*"
+  workflow: run_tests_android
+
+meta:
+  bitrise.io:
+    stack: osx-xcode-15.4.x
+    machine_type_id: g2-m1.4core
+
 workflows:
   
   run_tests_android:
@@ -19,7 +30,8 @@ workflows:
         inputs:
         - project_location: "$BITRISE_SOURCE_DIR"
         - module: "shared"
-        - build_type: "debug"
+        - build_type: "apk"
+        - variant: "debug"
     - android-unit-test@1:
         inputs:
         - project_location: "$BITRISE_SOURCE_DIR"
@@ -69,7 +81,8 @@ workflows:
         inputs:
         - project_location: "$BITRISE_SOURCE_DIR"
         - module: "androidApp"
-        - build_type: "debug"
+        - build_type: "apk"
+        - variant: "debug"
     - virtual-device-testing-for-android@1:
         inputs:
         - test_type: "instrumentation"
