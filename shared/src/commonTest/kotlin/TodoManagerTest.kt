@@ -83,12 +83,13 @@ class TodoManagerTest {
         val firstResult = todoManager.addTodo("First Todo", "First Description")
         assertTrue(firstResult.isSuccess)
         
-        kotlinx.coroutines.delay(10) // Small delay to ensure different timestamps
+        //adding delays
+        kotlinx.coroutines.delay(12) // Small delay to ensure different timestamps
         
         val secondResult = todoManager.addTodo("Second Todo", "Second Description")
         assertTrue(secondResult.isSuccess)
         
-        kotlinx.coroutines.delay(10) // Small delay to ensure different timestamps
+        kotlinx.coroutines.delay(12) // Small delay to ensure different timestamps
         
         val thirdResult = todoManager.addTodo("Third Todo", "Third Description")
         assertTrue(thirdResult.isSuccess)
