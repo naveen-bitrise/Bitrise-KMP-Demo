@@ -26,16 +26,11 @@ workflows:
     - set-java-version@1:
         inputs:
         - set_java_version: "17"
-    - android-build@1:
-        inputs:
-        - project_location: "$BITRISE_SOURCE_DIR"
-        - module: "shared"
-        - build_type: "apk"
-        - variant: "debug"
     - android-unit-test@1:
         inputs:
         - project_location: "$BITRISE_SOURCE_DIR"
         - module: "shared"
+        - variant: "debug"
     - cache-push@2:
         inputs:
         - cache_paths: |
@@ -77,11 +72,10 @@ workflows:
     - set-java-version@1:
         inputs:
         - set_java_version: "17"
-    - android-build@1:
+    - android-build-for-ui-testing@0:
         inputs:
         - project_location: "$BITRISE_SOURCE_DIR"
         - module: "androidApp"
-        - build_type: "apk"
         - variant: "debug"
     - virtual-device-testing-for-android@1:
         inputs:
