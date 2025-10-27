@@ -79,17 +79,14 @@ class TodoManagerTest {
     fun testGetAllTodosWithMultipleTodos() = runTest {
         val todoManager = TodoManager()
         
-        // Add multiple todos with small delays to ensure unique timestamps
+        // Add multiple todos with longer delays to ensure unique timestamps/IDs
         val firstResult = todoManager.addTodo("First Todo", "First Description")
         assertTrue(firstResult.isSuccess)
-        
-        //adding delays
-        kotlinx.coroutines.delay(12) // Small delay to ensure different timestamps
+        kotlinx.coroutines.delay(5) // Increased delay for unique IDs
         
         val secondResult = todoManager.addTodo("Second Todo", "Second Description")
         assertTrue(secondResult.isSuccess)
-        
-        kotlinx.coroutines.delay(12) // Small delay to ensure different timestamps
+        kotlinx.coroutines.delay(5) // Increased delay for unique IDs
         
         val thirdResult = todoManager.addTodo("Third Todo", "Third Description")
         assertTrue(thirdResult.isSuccess)
