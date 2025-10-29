@@ -2,8 +2,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import java.util.concurrent.atomic.AtomicLong
 
 class TodoManager(private val repository: TodoRepository = InMemoryTodoRepository()) {
+    companion object {
+        private val idCounter = AtomicLong(0)
+    }
     
     fun getAllTodos(): Flow<List<TodoItem>> = repository.getAllTodos()
     
@@ -79,6 +83,8 @@ class TodoManager(private val repository: TodoRepository = InMemoryTodoRepositor
     }
     
     private fun generateId(): String {
-        return Clock.System.now().toEpochMilliseconds().toString()
+        val timestamp = Clock.System.now().toEpochMilliseconds()
+        val counter = idCounter.incrementAndGet()
+        return "${timestamp}-${counter}"
     }
 }
