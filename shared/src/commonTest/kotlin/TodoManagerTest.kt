@@ -74,4 +74,30 @@ class TodoManagerTest {
         val todos = todoManager.getAllTodos().first()
         assertTrue(todos.isEmpty())
     }
+    
+    @Test
+    fun testGetAllTodosWithMultipleTodos() = runTest {
+        val todoManager = TodoManager()
+        
+        // Add multiple todos with longer delays to ensure unique timestamps/IDs
+        val firstResult = todoManager.addTodo("First Todo", "First Description")
+        assertTrue(firstResult.isSuccess)
+        kotlinx.coroutines.delay(5) // Increased delay for unique IDs
+        
+        val secondResult = todoManager.addTodo("Second Todo", "Second Description")
+        assertTrue(secondResult.isSuccess)
+        kotlinx.coroutines.delay(5) // Increased delay for unique IDs
+        
+        val thirdResult = todoManager.addTodo("Third Todo", "Third Description")
+        assertTrue(thirdResult.isSuccess)
+        
+        val todos = todoManager.getAllTodos().first()
+        assertEquals(3, todos.size)
+        
+        // Verify all three todos are present (order may vary due to timestamp sorting)
+        val todoTitles = todos.map { it.title }
+        assertTrue(todoTitles.contains("First Todo"), "Should contain First Todo")
+        assertTrue(todoTitles.contains("Second Todo"), "Should contain Second Todo")
+        assertTrue(todoTitles.contains("Third Todo"), "Should contain Third Todo")
+    }
 }
