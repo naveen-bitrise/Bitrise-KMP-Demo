@@ -79,6 +79,7 @@ class TodoManager(private val repository: TodoRepository = InMemoryTodoRepositor
     }
     
     private fun generateId(): String {
-        return Clock.System.now().toEpochMilliseconds().toString()
+        // Fixed timestamp - will always generate same ID (demonstrates the bug)
+        return "12345"
     }
 }
